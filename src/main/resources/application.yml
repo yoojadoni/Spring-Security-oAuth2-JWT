@@ -1,0 +1,89 @@
+
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      #h2 console 사용여부
+      enabled: true
+
+      jpa:
+        show-sql: true
+        hibernate:
+          ddl-auto: create
+        properties:
+          hibernate:
+            #          show-sql: true
+            format_sql: true
+        datasource-platform: org.hibernate.dialect.H2Dialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            clientId: <your id>
+            clientSecret: <your secret>
+            redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            authorizationGrantType: authorization_code
+            clientAuthenticationMethod: POST
+            clientName: Kakao
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+          naver:
+            clientId: <your id>
+            clientSecret: <your secret>
+            redirectUri: localhost:8080/login/oauth2/code/naver
+            authorizationGrantType: authorization_code
+            clientAuthenticationMethod: POST
+            scope:
+              - profile
+              - email
+          google:
+            client-id: <your id>
+            client-secret: <your secret>
+            scope:
+              - profile
+              - email
+        provider:
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
+          naver:
+            authorizationUri: https://nid.naver.com/oauth2.0/authorize
+            tokenUri: https://nid.naver.com/oauth2.0/token
+            userInfoUri: https://openapi.naver.com/v1/nid/me
+            userNameAttribute: response
+  http:
+    encoding:
+      charset: UTF-8
+      endable: true
+      force: true
+
+  resouces:
+    static-locations: file:src/main/resources/static/templates/
+
+  thymeleaf:
+    prefix: classpath:templates/
+    sufiix: .html
+    # thymeleaf에 대한 캐시를 남기지 않는다. cache=false 설정(운영시는 true)
+    cache: false
+    encoding: UTF-8
+
+jwt:
+  token.header: Bearer
+  secretKey: secretKeykkkkkkkkabcfgtreewasdfffasdfasasfasdfasdfasf
+  #단위(ms) 604800sec -> 1주일
+  #expiredTime: 604800000
+  #30000 -> 30초
+  expiredTime: 30000000
+  refreshTime: 7776000000
